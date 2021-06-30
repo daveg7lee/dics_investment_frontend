@@ -29,11 +29,11 @@ export default function Auth() {
     }
   };
   const [auth] = useMutation(AUTH_MUTATION, { onCompleted });
-  const onClick = ({ profile }: any) => {
+  const onKakaoLogin = ({ profile }: any) => {
     const username = profile.properties.nickname;
     const avatar = profile.properties.profile_image;
     const email = profile.kakao_account.email;
-    const id = profile.id;
+    const id = profile.id.toString();
     auth({
       variables: {
         AuthInput: {
@@ -46,13 +46,18 @@ export default function Auth() {
     });
   };
   return (
-    <div className="flex justify-center items-center max-h-80 h-64">
-      <KaKaoLogin
-        token={process.env.NEXT_PUBLIC_KAKAO_KEY}
-        onSuccess={onClick}
-        onFail={console.error}
-        onLogout={console.info}
-      />
+    <div className="flex flex-col items-center h-96">
+      <div className="pt-16">
+        <h1 className="text-4xl font-semibold">App Title</h1>
+      </div>
+      <div className="flex flex-col justify-center items-center h-full">
+        <KaKaoLogin
+          token={process.env.NEXT_PUBLIC_KAKAO_KEY}
+          onSuccess={onKakaoLogin}
+          onFail={console.error}
+          onLogout={console.info}
+        />
+      </div>
     </div>
   );
 }

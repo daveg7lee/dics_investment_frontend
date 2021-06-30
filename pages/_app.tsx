@@ -1,13 +1,21 @@
 import '../styles/globals.css';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
 import 'reactjs-popup/dist/index.css';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 import type { AppProps } from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 import { client } from '../apollo';
+import Header from '../components/header';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <Header />
+      <div className="pt-16 lg:w-lg lg:px-0 lg:m-auto px-6 min-h-screen">
+        <Component {...pageProps} />
+      </div>
+      <ToastContainer />
     </ApolloProvider>
   );
 }

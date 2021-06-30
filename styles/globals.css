@@ -41,3 +41,35 @@ a {
 .popup-content {
   -webkit-animation: anvil 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9) forwards;
 }
+
+.popup-content {
+  margin: auto;
+  background: rgb(255, 255, 255);
+  width: 50%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+input {
+  border: 1px solid #d3d7dc;
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+svg {
+  color: #868c98;
+}
+
+main {
+  margin-top: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 768px;
+  padding-bottom: 5rem;
+}

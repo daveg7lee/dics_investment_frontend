@@ -1,20 +1,38 @@
-import Popup from 'reactjs-popup';
-import { isLoggedInVar, logUserOut } from '../apollo';
-import Auth from '../components/auth';
+import { gql, useQuery } from '@apollo/client';
+import Loader from 'react-loader-spinner';
+import EventBanner from '../components/EventBanner';
+
+const SEE_EVENTS_QUERY = gql`
+  query seeEvents {
+    seeEvents {
+      id
+      title
+      purpose
+      payUrl
+      owner {
+        avatar
+        username
+      }
+    }
+  }
+`;
 
 export default function home() {
+  const { data } = useQuery(SEE_EVENTS_QUERY);
   return (
-    <div className="flex w-full min-h-screen">
-      {!isLoggedInVar() && (
-        <Popup trigger={<button>로그인</button>} modal>
-          <Auth />
-        </Popup>
-      )}
-      {isLoggedInVar() && (
-        <button onClick={logUserOut}>
-          <h1>로그아웃</h1>
-        </button>
-      )}
+    <div className="mt-5 grid lg:grid-cols-3 grid-flow-row gap-10 md:grid-cols-2 sm:grid-cols-1">
+      {data?.seeEvents?.map((event) => {
+        return (
+          <EventBanner
+            key={event.id}
+            id={event.id}
+            title={event.title}
+            purpose={event.purpose}
+            owner={event.owner}
+            payUrl={event.payUrl}
+          />
+        );
+      })}
     </div>
   );
 }
