@@ -26,8 +26,17 @@ export default function Header() {
             </a>
           )}
           {!isLoggedInVar() && (
-            <Popup trigger={<button>로그인</button>} modal>
-              <Auth />
+            <Popup
+              trigger={
+                <button className="py-1.5 px-2.5 hover:bg-gray-200 border border-gray-300 rounded font-semibold">
+                  로그인
+                </button>
+              }
+              modal
+              nested
+              repositionOnResize
+            >
+              {(close) => <Auth close={close} />}
             </Popup>
           )}
           {isLoggedInVar() && (

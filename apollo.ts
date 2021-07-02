@@ -11,7 +11,7 @@ let token;
 
 export const logUserOut = () => {
   localStorage.removeItem(LOCALSTORAGE_TOKEN);
-  window.location.reload();
+  window.location.href = '/';
 };
 
 if (process.browser) {

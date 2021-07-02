@@ -1,109 +1,80 @@
-import QrcodeDecoder from 'qrcode-decoder';
-import QRCode from 'react-qr-code';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { gql, useMutation } from '@apollo/client';
-import { useRouter } from 'next/dist/client/router';
-import { toast } from 'react-toastify';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(import('react-quill'), {
+  ssr: false,
+  loading: () => <p>Loading ...</p>,
+});
 
-const CREATE_EVENT_MUTATION = gql`
-  mutation createEvent($CreateEventInput: CreateEventInput!) {
-    createEvent(CreateEventInput: $CreateEventInput) {
-      error
-      ok
-    }
-  }
-`;
+const modules = {
+  toolbar: {
+    container: '#toolbar',
+  },
+};
+
+const CustomToolbar = () => (
+  <div id="toolbar" className="flex items-center h-14">
+    <select className="ql-header">
+      <option value="1"></option>
+      <option value="2"></option>
+      <option value="3"></option>
+      <option value="4" selected></option>
+    </select>
+    <button className="ql-bold"></button>
+    <button className="ql-italic"></button>
+    <select className="ql-color">
+      <option value="red"></option>
+      <option value="green"></option>
+      <option value="blue"></option>
+      <option value="orange"></option>
+      <option value="violet"></option>
+      <option value="#d0d1d2"></option>
+      <option selected></option>
+    </select>
+    <select className="ql-background"></select>
+    <button className="ql-link"></button>
+    <button className="ql-image"></button>
+    <button className="ql-code-block"></button>
+  </div>
+);
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'list',
+  'bullet',
+  'align',
+  'color',
+  'background',
+  'image',
+  'code-block',
+];
 
 export default function CreateEvent() {
-  const router = useRouter();
-  const { register, handleSubmit } = useForm();
-  const [payUrl, setPayUrl] = useState('');
-  const onCompleted = (data: any) => {
-    const {
-      createEvent: { ok },
-    } = data;
-    if (ok) {
-      router.push('/');
-    }
-  };
-  const [createEventMutation] = useMutation(CREATE_EVENT_MUTATION, {
-    onCompleted,
-  });
-  const onSubmit = ({ title, purpose }) => {
-    if (payUrl) {
-      createEventMutation({
-        variables: { CreateEventInput: { title, purpose, payUrl } },
-      });
-    } else {
-      toast.error('카카오페이 송금 QR코드가 없습니다');
-    }
-  };
-  const getFile = async (e) => {
-    const qr = new QrcodeDecoder();
-    const reader = new FileReader();
-    const files = e.target.files;
-    reader.onload = async () => {
-      const { data } = await qr.decodeFromImage(reader.result);
-      setPayUrl(data);
-    };
-    reader.readAsDataURL(files[0]);
-  };
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center p-8">
-      <div className="w-2/3 flex justify-start mb-2">
-        <h1 className="text-3xl font-semibold">이벤트 게시하기</h1>
+    <div className="flex flex-col items-center min-h-screen pb-10 px-32">
+      <input
+        type="text"
+        maxLength={30}
+        className="w-full h-24 mt-6 text-3xl font-semibold border-0 outline-none placeholder-gray-300"
+        placeholder="제목을 입력하세요."
+      />
+      <div className="w-full rounded">
+        <CustomToolbar />
+        <ReactQuill
+          modules={modules}
+          formats={formats}
+          onChange={(content, delta, source, editor) =>
+            console.log(editor.getHTML())
+          }
+          className="w-full border-none"
+        />
       </div>
-
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="w-2/3 border border-gray-400 rounded flex flex-col items-center py-8"
-      >
-        <div className="w-3/5 mb-5">
-          <label htmlFor="title">제목</label>
-          <input
-            type="text"
-            id="title"
-            placeholder="제목을 입력하세요"
-            className="w-full"
-            {...register('title')}
-          />
-        </div>
-        <div className="w-3/5 mb-5">
-          <label htmlFor="purpose">목적</label>
-          <input
-            type="text"
-            id="purpose"
-            placeholder="목적을 입력하세요"
-            className="w-full"
-            {...register('purpose')}
-          />
-        </div>
-        <div className="w-3/5 mb-5">
-          <label>카카오페이 송금 QR코드</label>
-          {payUrl && <QRCode value={payUrl} />}
-          <label
-            htmlFor="payUrl"
-            className="px-2.5 py-1.5  border border-gray-300 rounded w-max mt-0.5 cursor-pointer"
-          >
-            {payUrl ? '수정하기' : '업로드'}
-          </label>
-          <input
-            type="file"
-            name="payUrl"
-            id="payUrl"
-            className="hidden"
-            onChange={getFile}
-          />
-        </div>
-        <div className="w-3/5 flex items-center justify-end">
-          <input
-            type="submit"
-            value="게시하기"
-            className="px-2.5 py-1.5 bg-red-400 rounded text-white cursor-pointer"
-          />
-        </div>
-      </form>
+      <div className="w-full mt-5 flex justify-end items-center">
+        <button className="button bg-red-400 rounded text-white">다음</button>
+      </div>
     </div>
   );
 }

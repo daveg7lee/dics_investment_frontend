@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import 'reactjs-popup/dist/index.css';
+import 'react-quill/dist/quill.snow.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import type { AppProps } from 'next/app';

@@ -4,6 +4,7 @@ import QRCode from 'react-qr-code';
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 
 const EDIT_PROFILE_MUTATION = gql`
   mutation editProfile($EditProfileInput: EditProfileInput!) {
@@ -25,8 +26,15 @@ export default function Setting() {
     }
   };
   const [editProfile] = useMutation(EDIT_PROFILE_MUTATION, { onCompleted });
+  const [isEdit, setIsEdit] = useState(false);
   const [payUrl, setPayUrl] = useState('');
   const [preview, setPreview] = useState<any>('');
+  const [isAccepted, setIsAccepted] = useState(false);
+  const { handleSubmit, register } = useForm();
+  const onSubmit = ({ username }) => {
+    editProfile({ variables: { EditProfileInput: { username } } });
+    setIsEdit(false);
+  };
   const getProfileFile = async (e) => {
     const formData = new FormData();
     const reader = new FileReader();
@@ -82,8 +90,35 @@ export default function Setting() {
           </label>
         </div>
         <div className="pl-6 flex flex-col border-l border-gray-300">
-          <h1 className="text-4xl font-bold mb-3">{data?.me?.username}</h1>
-          <p className="cursor-pointer underline select-none">수정하기</p>
+          {isEdit ? (
+            <>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <input
+                  type="text"
+                  defaultValue={data?.me?.username}
+                  className="text-4xl font-bold mb-3"
+                  {...register('username')}
+                />
+                <div className="flex items-center justify-end">
+                  <input
+                    type="submit"
+                    className="cursor-pointer select-none p-2 border border-gray-300 w-max rounded"
+                    value="저장하기"
+                  />
+                </div>
+              </form>
+            </>
+          ) : (
+            <>
+              <h1 className="text-4xl font-bold mb-3">{data?.me?.username}</h1>
+              <p
+                className="cursor-pointer underline select-none"
+                onClick={() => setIsEdit(true)}
+              >
+                수정하기
+              </p>
+            </>
+          )}
         </div>
       </section>
       <section className="mt-12">
@@ -116,6 +151,30 @@ export default function Setting() {
                 onChange={getPayUrlFile}
               />
             </label>
+          </div>
+        </div>
+        <div className="py-4">
+          <h1 className="leading-10 font-bold text-xl">회원 탈퇴</h1>
+          <div className="flex items-end justify-between">
+            <label
+              htmlFor="deleteUser"
+              className="flex items-center text-gray-500 font-light"
+            >
+              <input
+                type="checkbox"
+                id="deleteUser"
+                className="mr-2"
+                onChange={() => setIsAccepted(!isAccepted)}
+              />
+              회원 탈퇴시 게시한 이벤트가 모두 삭제되며 되돌릴 수 없음을
+              이해하였습니다.
+            </label>
+            <button
+              className="px-2 py-1.5 bg-red-400 disabled:opacity-60 rounded text-white"
+              disabled={!isAccepted}
+            >
+              회원 탈퇴
+            </button>
           </div>
         </div>
       </section>

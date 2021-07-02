@@ -1,5 +1,4 @@
 import { gql, useQuery } from '@apollo/client';
-import Loader from 'react-loader-spinner';
 import EventBanner from '../components/EventBanner';
 
 const SEE_EVENTS_QUERY = gql`
@@ -20,7 +19,7 @@ const SEE_EVENTS_QUERY = gql`
 export default function home() {
   const { data } = useQuery(SEE_EVENTS_QUERY);
   return (
-    <div className="mt-5 grid lg:grid-cols-3 grid-flow-row gap-10 md:grid-cols-2 sm:grid-cols-1">
+    <div className=" mt-6 py-10 grid lg:grid-cols-3 grid-flow-row gap-10 md:grid-cols-2 sm:grid-cols-1">
       {data?.seeEvents?.map((event) => {
         return (
           <EventBanner
