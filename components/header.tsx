@@ -19,10 +19,8 @@ export default function Header() {
         </div>
         <div className="flex items-center h-full">
           {isLoggedInVar() && (
-            <a className="mr-3.5 text-xl cursor-pointer">
-              <Link href="/create-event">
-                <AiFillPlusCircle className="text-2xl" />
-              </Link>
+            <a className="mr-3.5 text-sm font-semibold cursor-pointer button rounded-full border border-gray-300 hover:bg-gray-300">
+              <Link href="/create-event">새 이벤트</Link>
             </a>
           )}
           {!isLoggedInVar() && (
