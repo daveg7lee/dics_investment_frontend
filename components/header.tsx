@@ -8,7 +8,7 @@ import useUser from '../hooks/useMe';
 export default function Header() {
   const { data } = useUser();
   return (
-    <div className="w-full h-16 fixed bg-white">
+    <div className="w-full h-16 fixed bg-white z-10">
       <div className="lg:w-lg lg:p-0 lg:m-auto px-6 h-full flex items-center justify-between">
         <div className="flex items-center h-full">
           <a className="cursor-pointer">
@@ -34,7 +34,6 @@ export default function Header() {
               }
               modal
               nested
-              repositionOnResize
             >
               {(close) => <Auth close={close} />}
             </Popup>
@@ -51,22 +50,26 @@ export default function Header() {
               contentStyle={{
                 padding: 0,
                 border: 'none',
-                borderRadius: 0,
+                width: 'auto',
+                height: 'auto',
+              }}
+              overlayStyle={{
+                opacity: 0,
               }}
               position="bottom right"
               closeOnEscape
             >
               <div className="shadow">
-                <div className="p-3 cursor-pointer hover:bg-gray-100">
+                <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
                   내 이벤트
                 </div>
                 <Link href="/setting">
-                  <div className="p-3 cursor-pointer hover:bg-gray-100">
+                  <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
                     <a>설정</a>
                   </div>
                 </Link>
                 <div
-                  className="p-3 cursor-pointer hover:bg-gray-100"
+                  className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100"
                   onClick={logUserOut}
                 >
                   로그아웃

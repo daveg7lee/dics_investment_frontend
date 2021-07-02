@@ -8,6 +8,7 @@ const SEE_EVENTS_QUERY = gql`
       title
       purpose
       payUrl
+      banner
       owner {
         avatar
         username
@@ -24,11 +25,11 @@ export default function home() {
         return (
           <EventBanner
             key={event.id}
-            id={event.id}
             title={event.title}
             purpose={event.purpose}
             owner={event.owner}
             payUrl={event.payUrl}
+            banner={event.banner}
           />
         );
       })}

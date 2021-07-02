@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import 'react-sliding-pane/dist/react-sliding-pane.css';
 import 'react-quill/dist/quill.snow.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';

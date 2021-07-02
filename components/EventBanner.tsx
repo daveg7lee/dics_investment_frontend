@@ -1,9 +1,11 @@
 import { FaDonate } from 'react-icons/fa';
 
-export default function EventBanner({ id, title, purpose, owner, payUrl }) {
+export default function EventBanner({ title, purpose, owner, payUrl, banner }) {
   return (
     <div className="w-full bg-white rounded shadow">
-      <div className="bg-red-400 w-full h-36 rounded-t"></div>
+      <div className="w-full h-44 rounded-t overflow-hidden flex justify-center items-center">
+        <img src={banner} />
+      </div>
       <div className="p-4">
         <h1 className="font-semibold text-lg">{title}</h1>
         <p className="text-sm font-light">{purpose}</p>
@@ -11,7 +13,7 @@ export default function EventBanner({ id, title, purpose, owner, payUrl }) {
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center">
           <img src={owner.avatar} className="rounded-full w-8 h-8 mr-2" />
-          <h1>{owner.username}</h1>
+          <h1 className="font-medium">{owner.username}</h1>
         </div>
         <div>
           <a
