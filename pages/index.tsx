@@ -6,7 +6,6 @@ const SEE_EVENTS_QUERY = gql`
     seeEvents {
       id
       title
-      purpose
       payUrl
       banner
       owner {
@@ -25,8 +24,8 @@ export default function home() {
         return (
           <EventBanner
             key={event.id}
+            id={event.id}
             title={event.title}
-            purpose={event.purpose}
             owner={event.owner}
             payUrl={event.payUrl}
             banner={event.banner}

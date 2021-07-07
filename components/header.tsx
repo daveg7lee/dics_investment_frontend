@@ -13,7 +13,7 @@ export default function Header() {
         <div className="flex items-center h-full">
           <a className="cursor-pointer">
             <Link href="/">
-              <h1>Logo</h1>
+              <h1 className="text-base">Logo</h1>
             </Link>
           </a>
         </div>

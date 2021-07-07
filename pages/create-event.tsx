@@ -140,11 +140,11 @@ export default function CreateEvent() {
       <input
         type="text"
         maxLength={30}
-        className="w-full h-24 mt-6 text-3xl font-semibold border-0 outline-none placeholder-gray-300"
+        className="w-full h-24 mt-6 text-4xl font-semibold border-0 outline-none placeholder-gray-300"
         placeholder="제목을 입력하세요."
         {...register('title')}
       />
-      <div className="w-full rounded">
+      <div className="w-full rounded maintext">
         <CustomToolbar />
         <ReactQuill
           modules={modules}

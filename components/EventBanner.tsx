@@ -1,20 +1,26 @@
+import Link from 'next/link';
 import { FaDonate } from 'react-icons/fa';
 
-export default function EventBanner({ title, purpose, owner, payUrl, banner }) {
+export default function EventBanner({ id, title, owner, payUrl, banner }) {
   return (
     <div className="w-full bg-white rounded shadow">
       <div className="w-full h-44 rounded-t overflow-hidden flex justify-center items-center">
         <img src={banner} />
       </div>
-      <div className="p-4">
-        <h1 className="font-semibold text-lg">{title}</h1>
-        <p className="text-sm font-light">{purpose}</p>
+      <div className="px-4 py-3">
+        <Link href={`/detail/${id}`}>
+          <h1 className="font-semibold text-lg cursor-pointer w-max">
+            {title}
+          </h1>
+        </Link>
       </div>
-      <div className="p-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <img src={owner.avatar} className="rounded-full w-8 h-8 mr-2" />
-          <h1 className="font-medium">{owner.username}</h1>
-        </div>
+      <div className="px-4 py-3 flex items-center justify-between">
+        <a href={owner.username}>
+          <div className="flex items-center">
+            <img src={owner.avatar} className="rounded-full w-8 h-8 mr-2" />
+            <h1 className="font-medium">{owner.username}</h1>
+          </div>
+        </a>
         <div>
           <a
             rel="noopener noreferrer"
