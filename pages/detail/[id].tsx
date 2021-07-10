@@ -1,6 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 import { useRouter } from 'next/dist/client/router';
 import Loader from 'react-loader-spinner';
+import { IoSettingsSharp } from 'react-icons/io5';
+import useUser from '../../hooks/useMe';
 
 const SEE_EVENT_QUERY = gql`
   query seeEvent($seeEventInput: SeeEventInput!) {
@@ -24,12 +26,18 @@ export default function DetailPage() {
   const { data } = useQuery(SEE_EVENT_QUERY, {
     variables: { seeEventInput: { id: Number(id) } },
   });
+  const { data: userData } = useUser();
   return (
     <div>
       {data ? (
         <div className="w-full min-h-screen md:px-20">
-          <div className="w-full flex flex-col items-center justify-center my-10">
-            <img src={data?.seeEvent?.banner} className="h-80" />
+          <div className="w-full relative my-10">
+            {data?.seeEvent?.owner?.username == userData?.me?.username && (
+              <IoSettingsSharp className="text-2xl cursor-pointer absolute right-0" />
+            )}
+            <div className="flex items-center justify-center w-full">
+              <img src={data?.seeEvent?.banner} className="h-80" />
+            </div>
           </div>
           <h1 className="text-5xl font-semibold mb-14">
             {data?.seeEvent?.title}
