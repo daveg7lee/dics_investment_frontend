@@ -14,52 +14,23 @@ const ReactQuill = dynamic(import('react-quill'), {
 });
 
 const modules = {
-  toolbar: {
-    container: '#toolbar',
-  },
+  toolbar: [
+    'italic',
+    'bold',
+    'underline',
+    'strike',
+    'background',
+    'color',
+    'blank',
+    'code',
+    'link',
+    'blockquote',
+    '',
+    'code-block',
+    'image',
+    'video',
+  ],
 };
-
-const CustomToolbar = () => (
-  <div id="toolbar" className="flex items-center h-14">
-    <select className="ql-header">
-      <option value="1"></option>
-      <option value="2"></option>
-      <option value="3"></option>
-      <option value="4" selected></option>
-    </select>
-    <button className="ql-bold"></button>
-    <button className="ql-italic"></button>
-    <select className="ql-color">
-      <option value="red"></option>
-      <option value="green"></option>
-      <option value="blue"></option>
-      <option value="orange"></option>
-      <option value="violet"></option>
-      <option value="#d0d1d2"></option>
-      <option selected></option>
-    </select>
-    <select className="ql-background"></select>
-    <button className="ql-link"></button>
-    <button className="ql-image"></button>
-    <button className="ql-code-block"></button>
-  </div>
-);
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'list',
-  'bullet',
-  'align',
-  'color',
-  'background',
-  'image',
-  'code-block',
-];
 
 const CREATE_EVENT_MUTATION = gql`
   mutation createEvent($CreateEventInput: CreateEventInput!) {
@@ -144,15 +115,13 @@ export default function CreateEvent() {
         placeholder="제목을 입력하세요."
         {...register('title')}
       />
-      <div className="w-full rounded maintext">
-        <CustomToolbar />
+      <div className="w-full">
         <ReactQuill
           modules={modules}
-          formats={formats}
           onChange={(content, delta, source, editor) =>
             setPurpose(editor.getHTML())
           }
-          className="w-full border-none"
+          className="w-full border-none maintext"
         />
       </div>
       <div className="w-full mt-5 flex justify-end items-center">

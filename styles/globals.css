@@ -96,30 +96,27 @@ main {
   }
 }
 
-p {
-  font-size: 20px;
-}
 .maintext > h1,
 h2,
 h3,
-h4 {
+p {
   line-height: 1.5;
   margin-bottom: 1rem;
   font-weight: 500;
 }
 
-.maintext > h1 {
-  font-size: 2.25rem;
+.maintext >> h1 {
+  font-size: 4.5rem;
 }
 
-.maintext > h2 {
-  font-size: 2rem;
+.maintext >> h2 {
+  font-size: 4rem;
 }
 
-.maintext > h3 {
-  font-size: 1.5rem;
+.maintext >> h3 {
+  font-size: 3.5rem;
 }
 
-.maintext > h4 {
-  font-size: 1rem;
+.maintext > p {
+  font-size: 3rem;
 }
