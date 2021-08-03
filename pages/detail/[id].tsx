@@ -39,9 +39,7 @@ export default function DetailPage() {
               <img src={data?.seeEvent?.banner} className="h-80" />
             </div>
           </div>
-          <h1 className="text-5xl font-semibold mb-14">
-            {data?.seeEvent?.title}
-          </h1>
+          <h1 className="text-5xl font-bold mb-14">{data?.seeEvent?.title}</h1>
           <div
             dangerouslySetInnerHTML={{ __html: data?.seeEvent?.purpose }}
             className="maintext"

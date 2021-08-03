@@ -15,6 +15,15 @@ const EDIT_PROFILE_MUTATION = gql`
   }
 `;
 
+const DELETE_USER_MUTATION = gql`
+  mutation deleteUser {
+    deleteUser {
+      ok
+      error
+    }
+  }
+`;
+
 export default function Setting() {
   const { data } = useUser();
   const onCompleted = (data: any) => {
@@ -26,6 +35,7 @@ export default function Setting() {
     }
   };
   const [editProfile] = useMutation(EDIT_PROFILE_MUTATION, { onCompleted });
+  const [deleteUser] = useMutation(DELETE_USER_MUTATION);
   const [isEdit, setIsEdit] = useState(false);
   const [payUrl, setPayUrl] = useState('');
   const [preview, setPreview] = useState<any>('');
@@ -102,7 +112,7 @@ export default function Setting() {
                 <div className="flex items-center justify-end">
                   <input
                     type="submit"
-                    className="cursor-pointer select-none p-2 border border-gray-300 w-max rounded"
+                    className="cursor-pointer select-none px-3 py-1.5 border border-gray-300 bg-white w-max rounded"
                     value="저장하기"
                   />
                 </div>
@@ -112,7 +122,7 @@ export default function Setting() {
             <>
               <h1 className="text-4xl font-bold mb-3">{data?.me?.username}</h1>
               <p
-                className="cursor-pointer underline select-none"
+                className="cursor-pointer underline select-none text-gray-500"
                 onClick={() => setIsEdit(true)}
               >
                 수정하기
@@ -130,16 +140,22 @@ export default function Setting() {
           <h1 className="leading-10 font-bold text-xl">
             카카오페이 송금 QR코드
           </h1>
-          <div className="flex items-end justify-between">
-            <p className="py-2 text-gray-500">
+          <div className="flex items-end justify-between py-3">
+            <p className="text-gray-500 flex items-end m-0 h-full">
               {data?.me?.payUrl ? (
                 <QRCode value={payUrl ? payUrl : data?.me?.payUrl} size={100} />
               ) : (
-                '없음'
+                <img
+                  src={
+                    'https://res.cloudinary.com/du4erd9mp/image/upload/v1625234278/donate/x1b5tsjvjfspfop3erhu.jpg'
+                  }
+                  alt="없음"
+                  className="w-52"
+                />
               )}
             </p>
             <label
-              className="px-5 py-1.5 rounded border border-gray-300 cursor-pointer"
+              className="px-5 py-1.5 rounded border border-gray-300 cursor-pointer m-0"
               htmlFor="payUrl"
             >
               이미지 업로드
@@ -172,6 +188,9 @@ export default function Setting() {
             <button
               className="px-2 py-1.5 bg-red-400 disabled:opacity-60 rounded text-white"
               disabled={!isAccepted}
+              onClick={async () => {
+                await deleteUser();
+              }}
             >
               회원 탈퇴
             </button>

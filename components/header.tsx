@@ -57,10 +57,12 @@ export default function Header() {
               position="bottom right"
               closeOnEscape
             >
-              <div className="shadow">
-                <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
-                  내 이벤트
-                </div>
+              <div className="shadow-md">
+                <Link href="/my-event">
+                  <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
+                    <a>내 이벤트</a>
+                  </div>
+                </Link>
                 <Link href="/setting">
                   <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
                     <a>설정</a>

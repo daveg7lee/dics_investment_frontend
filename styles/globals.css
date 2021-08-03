@@ -19,6 +19,12 @@ a {
   box-sizing: border-box;
 }
 
+.allCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .popup-content {
   background-color: white;
   width: 100%;
@@ -96,27 +102,31 @@ main {
   }
 }
 
-.maintext > h1,
-h2,
-h3,
-p {
-  line-height: 1.5;
-  margin-bottom: 1rem;
-  font-weight: 500;
+.maintext {
+  color: #222426;
 }
 
-.maintext >> h1 {
+.maintext > h1,
+h2,
+h3 {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.maintext > h1 {
   font-size: 4.5rem;
 }
 
-.maintext >> h2 {
+.maintext > h2 {
   font-size: 4rem;
 }
 
-.maintext >> h3 {
+.maintext > h3 {
   font-size: 3.5rem;
 }
 
 .maintext > p {
-  font-size: 3rem;
+  font-size: 18px;
+  line-height: 31px;
 }

@@ -5,6 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta charSet="utf-8" />
           <link
             href="//cdn.quilljs.com/1.3.6/quill.core.css"
             rel="stylesheet"
