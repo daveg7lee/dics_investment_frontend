@@ -1,11 +1,22 @@
 import Popup from 'reactjs-popup';
 import Link from 'next/link';
-import { AiFillPlusCircle } from 'react-icons/ai';
 import { isLoggedInVar, logUserOut } from '../apollo';
 import Auth from './auth';
 import useUser from '../hooks/useMe';
+import { useRef } from 'react';
+
+const menuContentStyle = {
+  padding: 'none',
+  border: 'none',
+  width: 'auto',
+  height: 'auto',
+  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+};
 
 export default function Header() {
+  const menuRef = useRef();
+  const openMenu = () => menuRef?.current?.open();
+  const closeMenu = () => menuRef?.current?.close();
   const { data } = useUser();
   return (
     <div className="w-full h-16 fixed bg-white z-10">
@@ -26,7 +37,7 @@ export default function Header() {
           {!isLoggedInVar() && (
             <Popup
               trigger={
-                <button className="py-1.5 px-2.5 hover:bg-gray-200 border border-gray-300 rounded font-semibold">
+                <button className="py-1.5 px-3 hover:bg-gray-200 border border-gray-300 rounded-full font-semibold">
                   로그인
                 </button>
               }
@@ -37,45 +48,53 @@ export default function Header() {
             </Popup>
           )}
           {isLoggedInVar() && (
-            <Popup
-              trigger={
-                <img
-                  src={data?.me?.avatar}
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                />
-              }
-              arrowStyle={{ display: 'none' }}
-              contentStyle={{
-                padding: 0,
-                border: 'none',
-                width: 'auto',
-                height: 'auto',
-              }}
-              overlayStyle={{
-                opacity: 0,
-              }}
-              position="bottom right"
-              closeOnEscape
-            >
-              <div className="shadow-md">
-                <Link href="/my-event">
-                  <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
-                    <a>내 이벤트</a>
+            <>
+              <Popup
+                ref={menuRef}
+                trigger={
+                  <img
+                    src={data?.me?.avatar}
+                    className="w-9 h-9 rounded-full cursor-pointer"
+                    onClick={openMenu}
+                  />
+                }
+                arrow={false}
+                contentStyle={menuContentStyle}
+                overlayStyle={{
+                  display: 'none',
+                }}
+                position="bottom right"
+                closeOnDocumentClick
+              >
+                <div>
+                  <Link href="/my-event">
+                    <div
+                      className="px-10 py-3  cursor-pointer hover:bg-gray-100"
+                      onClick={closeMenu}
+                    >
+                      <a>내 이벤트</a>
+                    </div>
+                  </Link>
+                  <Link href="/setting">
+                    <div
+                      className="px-10 py-3  cursor-pointer hover:bg-gray-100"
+                      onClick={closeMenu}
+                    >
+                      <a>설정</a>
+                    </div>
+                  </Link>
+                  <div
+                    className="px-10 py-3  cursor-pointer hover:bg-gray-100"
+                    onClick={() => {
+                      closeMenu();
+                      logUserOut();
+                    }}
+                  >
+                    로그아웃
                   </div>
-                </Link>
-                <Link href="/setting">
-                  <div className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100">
-                    <a>설정</a>
-                  </div>
-                </Link>
-                <div
-                  className="px-10 py-3 text-left cursor-pointer hover:bg-gray-100"
-                  onClick={logUserOut}
-                >
-                  로그아웃
                 </div>
-              </div>
-            </Popup>
+              </Popup>
+            </>
           )}
         </div>
       </div>

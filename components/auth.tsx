@@ -66,6 +66,7 @@ export default function Auth({ close }) {
           onSuccess={onKakaoLogin}
           onFail={console.error}
           onLogout={console.info}
+          className="font-semibold"
         />
       </div>
     </div>

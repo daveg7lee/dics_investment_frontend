@@ -121,7 +121,7 @@ export default function CreateEvent() {
           onChange={(content, delta, source, editor) =>
             setPurpose(editor.getHTML())
           }
-          className="w-full border-none maintext"
+          className="w-full border-none"
         />
       </div>
       <div className="w-full mt-5 flex justify-end items-center">
