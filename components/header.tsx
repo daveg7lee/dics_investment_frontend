@@ -11,6 +11,7 @@ const menuContentStyle = {
   width: 'auto',
   height: 'auto',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+  marginTop: '15px',
 };
 
 export default function Header() {

@@ -9,6 +9,7 @@ const SEE_EVENTS_QUERY = gql`
       payUrl
       banner
       owner {
+        id
         avatar
         username
       }

@@ -15,7 +15,7 @@ export default function EventBanner({ id, title, owner, payUrl, banner }) {
         </a>
       </Link>
       <div className="px-4 py-3 flex items-center justify-between">
-        <a href={owner.username}>
+        <a href={owner.id}>
           <div className="flex items-center">
             <img src={owner.avatar} className="rounded-full w-8 h-8 mr-2" />
             <h1 className="font-medium">{owner.username}</h1>

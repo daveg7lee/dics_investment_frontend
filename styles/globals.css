@@ -52,7 +52,7 @@ a {
 }
 
 .button {
-  @apply py-1.5 px-3;
+  @apply py-1.5 px-3 rounded cursor-pointer;
 }
 
 input {

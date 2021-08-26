@@ -46,10 +46,12 @@ export default function CreateEvent() {
   const router = useRouter();
   const onCompleted = (data: any) => {
     const {
-      createEvent: { ok },
+      createEvent: { ok, error },
     } = data;
     if (ok) {
       router.push('/');
+    } else {
+      console.log(error);
     }
   };
   const [createEventMutation] = useMutation(CREATE_EVENT_MUTATION, {
@@ -95,6 +97,8 @@ export default function CreateEvent() {
         formData
       );
       bannerUrl = url;
+    } else {
+      bannerUrl = process.env.NEXT_PUBLIC_DEFAULT_IMAGE;
     }
     if (title && purpose && payUrl) {
       await createEventMutation({

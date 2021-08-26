@@ -36,7 +36,7 @@ const CreateEventSlidePage = ({
         )}
       </div>
     </div>
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center mb-5">
       <h1 className="text-2xl font-semibold mb-2 w-80">카카오페이 QR코드</h1>
       {payUrl && <QRCode value={payUrl} />}
       <div className="w-80">
